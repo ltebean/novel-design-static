@@ -1,0 +1,30 @@
+include ./common/component
+
+extends layout/default.jade
+
+block head  
+  title index
+  +css("./css/index.css")
+  +js("./js/index.js")
+
+mixin product()
+  .product
+    .aside
+      img(onload="this.style.opacity=1" src="http://pic.qupin.cc/pic/3B3EAAC6E9C1305681C925875BB5F516_B800_2400_800_534-276x135.png")
+    .content
+      .title 小红书
+      .description 提供各国家地区关税、必买清单、折扣信息、退税指南、商场介绍
+
+
+block content
+  .wrapper
+    +product()
+    +product()
+    +product()
+    +product()
+    +product()
+    +product()
+    +product()
+    +product()
+
+
