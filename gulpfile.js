@@ -2,7 +2,6 @@ var gulp = require('gulp');
 var stylus = require('gulp-stylus');
 var jade = require('gulp-jade');
 var nib = require('nib');
-var browserify = require('gulp-browserify');
 
 process.on('uncaughtException', function(err) {
   console.log(err);
@@ -25,12 +24,9 @@ gulp.task('jade', function() {
     .pipe(gulp.dest('./build/'));
 });
 
-gulp.task('browserify', function() {
-  return gulp.src(["./dev/js/*.js"])
-    .pipe(browserify({
-      debug: true
-    }))
-    .pipe(gulp.dest('./build/js'));
+gulp.task('cortex', function() {
+  return gulp.src(["./dev/js/neurons/**/*.js"])
+    .pipe(gulp.dest('./build/neurons/'));
 });
 
 
@@ -44,10 +40,10 @@ gulp.task('img', function() {
 gulp.task('watch', function() {
   gulp.watch(['./dev/views/**/*.jade'], ['jade']);
   gulp.watch(['./dev/css/**/*.styl'], ['stylus']);
-  gulp.watch(['./dev/js/*.js'], ['browserify']);
+  gulp.watch(["./dev/js/neurons/**/*.js"], ['cortex']);
 });
 
 
-gulp.task('default', ['stylus', 'img', 'jade', 'browserify', 'watch']);
+gulp.task('default', ['stylus', 'img', 'jade', 'cortex', 'watch']);
 
-gulp.task('build', ['stylus', 'img', 'jade','browserify']);
+gulp.task('build', ['stylus', 'img', 'jade','cortex']);

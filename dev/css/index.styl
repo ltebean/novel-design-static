@@ -3,6 +3,7 @@ global-reset()
 @import "common/*"
 
 red=#da552f
+shadow= 0px 1px 1px 0px rgba(80,80,80,.2)
 
 body
   background-color:#efefef
@@ -12,40 +13,41 @@ body
   center()
 
 .product
+  margin:10px 10px
   background-color:#ffffff
-  height:86px
-  padding:12px 0px 10px 0px
-  border-bottom:1px solid #eeeeee
-  // border-top:1px solid #eeeeee
-  // margin:16px 0px
+  border:1px solid #dedede
   position:relative
-  .comment
-    font-size:10px
-    color:red
-    position:absolute
-    top:12px
-    right:10px
-    padding:4px
-    border-radius:3px
-
-
-  .aside
-    float:left
-    width:90px
-    height:60px
-    padding-left:10px
+  .thumb
+    position:relative
+    width:100%
+    .views
+      position:absolute
+      color:#ffffff
+      background-color:rgba(0,0,0,.8)
+      fong-size:8px
+      padding:5px
+      border-radius:5px
+      top:10px
+      left:10px
     img
       opacity:0
-      display:block
       width:100%
-      height:100%
       transition: opacity 2s;
   .content
-    padding-left:100px
+    padding:10px
+    position:relative
+    .angle
+      position:absolute
+      left:22px
+      top:-6px
+      width: 12px; 
+      height: 12px; 
+      background: #ffffff; /* assign a nice red color */
+      transform: rotate(45deg); /* rotating 45 degrees clockwise */
     .title
-      font-size:16px
+      font-size:14px
     .description
       line-height:1.4
-      margin-top:10px
+      margin-top:5px
       font-size:13px
       color:#999999

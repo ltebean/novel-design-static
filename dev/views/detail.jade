@@ -1,0 +1,26 @@
+include ./common/component
+
+extends layout/default.jade
+
+block head  
+  title index
+  +css("./css/detail.css")
+
+  
+
+block content
+  .wrapper
+    .thumb
+      img(src="http://p4.zbjimg.com/task/2011-08/17/968741/4e4b1606b89d3.jpg")
+    .panel.top
+      .title 卫生间设计
+      .btn-like Like
+    .panel.description 提供各国家地区关税、必买清单.提供各国家地区关税、必买清单,提供各国家地区关税、必买清单
+    .panel.comments
+  script.
+    facade({
+      entry:"novo-design-static/entries/detail.js"
+    })
+   
+
+

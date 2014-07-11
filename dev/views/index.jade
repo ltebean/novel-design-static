@@ -5,26 +5,29 @@ extends layout/default.jade
 block head  
   title index
   +css("./css/index.css")
-  +js("./js/index.js")
 
-mixin product()
+mixin product(img)
   .product
-    .aside
-      img(onload="this.style.opacity=1" src="http://pic.qupin.cc/pic/3B3EAAC6E9C1305681C925875BB5F516_B800_2400_800_534-276x135.png")
+    .thumb
+      //- .views 12 views
+      img(onload="this.style.opacity=1" src="#{img}")
     .content
+      .angle
       .title 小红书
-      .description 提供各国家地区关税、必买清单、折扣信息、退税指南、商场介绍
-
+      .description 提供各国家地区关税、必买清单
 
 block content
   .wrapper
-    +product()
-    +product()
-    +product()
-    +product()
-    +product()
-    +product()
-    +product()
-    +product()
+    +product("http://p4.zbjimg.com/task/2011-08/17/968741/4e4b1606b89d3.jpg")
+    +product("http://img1.gtimg.com/hb/pics/hv1/97/119/823/53546017.jpg")
+    +product("http://i3.cqnews.net/fashion/attachement/jpg/site82/2010-07-20/4905110423361110388.jpg")
+    +product("http://2011.moban.siteserver.cn/bjly/upload/2011/6/1715327800.jpg")
+    +product("http://img2.aili.com/201301/15/1358227190_87602600.jpg")
+    +product("http://www.vimage.cn/up/info/201305/20130530095018_66162.jpg")
+  script.
+    facade({
+      entry:"novo-design-static/entries/index.js"
+    })
+   
 
 
