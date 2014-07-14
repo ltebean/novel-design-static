@@ -6,24 +6,26 @@ block head
   title index
   +css("./css/index.css")
 
-mixin product(img)
+mixin product()
   .product
+    .likes
+      img(src="./img/icon-heart.png")
+      span.txt 12
     .thumb
-      //- .views 12 views
-      img(onload="this.style.opacity=1" src="#{img}")
+      img(onload="this.style.opacity=1")
     .content
       .angle
-      .title 小红书
-      .description 提供各国家地区关税、必买清单
+      //- .title The House Design
+      //- .description It is designed by the famous person
+      .title Home Garden厨房设计
+      .description 非常精美别致的厨房设计，有设计大师Kindlie设计
 
 block content
   .wrapper
-    +product("http://p4.zbjimg.com/task/2011-08/17/968741/4e4b1606b89d3.jpg")
-    +product("http://img1.gtimg.com/hb/pics/hv1/97/119/823/53546017.jpg")
-    +product("http://i3.cqnews.net/fashion/attachement/jpg/site82/2010-07-20/4905110423361110388.jpg")
-    +product("http://2011.moban.siteserver.cn/bjly/upload/2011/6/1715327800.jpg")
-    +product("http://img2.aili.com/201301/15/1358227190_87602600.jpg")
-    +product("http://www.vimage.cn/up/info/201305/20130530095018_66162.jpg")
+    .design-list
+      .design-template.hide
+        +product()
+    .more.hide Load more
   script.
     facade({
       entry:"novel-design-static/entries/index.js"

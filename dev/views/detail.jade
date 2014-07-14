@@ -6,17 +6,32 @@ block head
   title index
   +css("./css/detail.css")
 
-  
+mixin comment()
+  .user-comment
+    .aside
+      img(onload="this.style.opacity=1" src="https://avatars0.githubusercontent.com/u/1646564?s=460")
+    .content
+      .top
+        span.name ltebean:
+      .comment 非常棒的设计, 很有趣哦
 
 block content
   .wrapper
     .thumb
-      img(src="http://p4.zbjimg.com/task/2011-08/17/968741/4e4b1606b89d3.jpg")
-    .panel.top
+      img(onload="this.style.opacity=1" src="http://p4.zbjimg.com/task/2011-08/17/968741/4e4b1606b89d3.jpg")
+    .panel.top-area
       .title 卫生间设计
-      .btn-like Like
-    .panel.description 提供各国家地区关税、必买清单.提供各国家地区关税、必买清单,提供各国家地区关税、必买清单
+      .btn Like
+    .panel.description 提供各国家地区关税、必买清单.提供各国家地区关税、必买清单,提供各国家地区关税、必买清单提供各国家地区关税、必买清单.提供各国家地区关税、必买清单,提供各国家地区关
     .panel.comments
+      +comment()
+      +comment()
+      +comment()
+      +comment()
+      +comment()
+      .more Load more
+
+      
   script.
     facade({
       entry:"novel-design-static/entries/detail.js"

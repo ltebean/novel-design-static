@@ -2,28 +2,30 @@ global-reset()
 
 @import "common/*"
 
-red=#da552f
-shadow= 0px 1px 1px 0px rgba(80,80,80,.2)
 
 body
   background-color:#ffffff
+
 
 .thumb
   width:100%
   img
     width:100%
+    opacity:0
+    transition: opacity 1.6s
 
 .panel
   //background-color:#efefef
   border-bottom:1px solid #dedede
 
-.top
+.top-area
   height:60px
   padding:0px 10px
   .title
     float:left
     line-height:60px
-  .btn-like
+  .btn
+    margin-left:5px
     float:right
     background-color:#dd6d39
     height:36px
@@ -35,9 +37,47 @@ body
 .description
   padding:10px
   font-size:13px
-  line-height:1.3
-  color:#999999
+  line-height:1.4
+  color:#666666
 
 .comments
-  height:500px
+  background-color:#efefef
+  border-bottom:none
+  padding:10px
+  .user-comment
+    clearfix()
+    margin-bottom:10px
+    .aside
+      float:left
+      width:50px
+      img
+        cycle(40px)
+        opacity:0
+        transition: opacity 1.6s
+    .content
+      .top
+        .name
+          font-size:13px
+          color:#666666
+      .comment
+        background-color:#ffffff
+        margin-left:50px
+        margin-top:7px
+        padding:10px
+        font-size:13px
+        line-height:1.4
+        min-height:30px
+        color:#333333
+        // border-radius:5px
+        //border:1px solid #dedede
+
+.more 
+  height:40px
+  line-height:36px
+  font-size:13px
+  background-color:#ffffff
+  border:1px solid #dedede
+  position:relative
+  text-align:center
+  color:#666666
 
