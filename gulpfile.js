@@ -2,6 +2,8 @@ var gulp = require('gulp');
 var stylus = require('gulp-stylus');
 var jade = require('gulp-jade');
 var nib = require('nib');
+var cssmin = require('gulp-cssmin');
+var uglify = require('gulp-uglify');
 
 process.on('uncaughtException', function(err) {
   console.log(err);
@@ -15,6 +17,7 @@ gulp.task('stylus', function() {
   return gulp.src(['./dev/css/**/*.styl'])
     .pipe(stylus(stylusOptions))
     .on('error', console.log)
+    .pipe(cssmin())
     .pipe(gulp.dest('./build/css'));
 });
 
@@ -26,6 +29,7 @@ gulp.task('jade', function() {
 
 gulp.task('cortex', function() {
   return gulp.src(["./dev/js/neurons/**/*.js"])
+    .pipe(uglify())
     .pipe(gulp.dest('./build/neurons/'));
 });
 
@@ -35,14 +39,11 @@ gulp.task('img', function() {
     .pipe(gulp.dest('./build/img'));
 });
 
-
-
 gulp.task('watch', function() {
   gulp.watch(['./dev/views/**/*.jade'], ['jade']);
   gulp.watch(['./dev/css/**/*.styl'], ['stylus']);
   gulp.watch(["./dev/js/neurons/**/*.js"], ['cortex']);
 });
-
 
 gulp.task('default', ['stylus', 'img', 'jade', 'cortex', 'watch']);
 

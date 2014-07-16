@@ -4,16 +4,12 @@ var fastclick = require('fastclick');
 var Spinner = require('spin.js');
 var IScroll = require('iscroll');
 
-
-
 var spinner = new Spinner({
   color: '#111111',
-  lines: 10,
+  lines: 12,
   length: 9,
-  width: 3
+  width: 2
 });
-
-
 
 function showSpinner() {
   spinner.spin(document.body);
@@ -26,6 +22,21 @@ function hideSpinner() {
   spinner.stop()
 }
 
+function alert(words) {
+  var iframe = document.createElement("IFRAME");
+  iframe.setAttribute("src", 'data:text/plain,');
+  document.documentElement.appendChild(iframe);
+  window.frames[0].window.alert(words);
+  iframe.parentNode.removeChild(iframe);
+}
+
+function showError() {
+  $('.error').removeClass('hide');
+}
+
+function hideError() {
+  $('.error').addClass('hide');
+}
 
 seaport.connect(function dataHandler(data) {
   console.log('receive data:' + data);
@@ -33,58 +44,120 @@ seaport.connect(function dataHandler(data) {
 
 
 function init(bridge) {
+  var screenWidth = $(document).width();
   var loading = false;
-  var wrapper = $('.design-list');
-  var template = $('.design-template');
+  var designList = $('.design-list');
+  var designTemplate = $('.design-template');
+  var categoryList = $('.category-list');
+  var categoryTemplate = $('.category-template');
   var more = $('.more');
+  var pageToLoad = 1;
+  var categoryToLoad = '';
 
   more.on('click', function() {
     loadData();
   })
 
-  loadData();
+  loadCategory();
 
   var domain = 'noveldesign.apiary-mock.com';
 
-  function loadData(page) {
+
+  function loadCategory() {
+    showSpinner()
+    bridge.http.get({
+      domain: 'localhost:3000',
+      path: '/api/category'
+    }, function(data) {
+      if (!data) {
+        hideSpinner();
+        showError();
+        return;
+      }
+      var totalWidth = 0;
+      data.forEach(function(data) {
+        totalWidth += addCategoryToList(data).width() + 1;
+      });
+      if (totalWidth > screenWidth) {
+        categoryList.css('width', totalWidth + 'px');
+      }
+      categoryList.css('margin-top', '0px');
+      setTimeout(function() {
+        loadData();
+      }, 300);
+    })
+  }
+
+  function addCategoryToList(data) {
+    var category = $(categoryTemplate.html());
+    category.text(data);
+    category.appendTo(categoryList);
+    fastclick(category[0]);
+    category.on('click', function() {
+      $('.category').removeClass('active');
+      $(this).addClass('active');
+      categoryToLoad = $(this).text().trim();
+      if (categoryToLoad == '最新') {
+        categoryToLoad = '';
+      }
+      loadData()
+    });
+    return category;
+  }
+
+  function loadData() {
     if (loading) {
       return;
     }
+    hideError();
     showSpinner();
-    loading = true
+    loading = true;
     bridge.http.get({
-      domain: 'noveldesign.apiary-mock.com',
-      path: '/api/design'
+      domain: 'localhost:3000',
+      path: '/api/design',
+      params: {
+        page: pageToLoad,
+        category: categoryToLoad
+      }
     }, function(data) {
       hideSpinner();
       loading = false;
       if (!data) {
-        alert('network error');
+        alert('Network Error');
+        showError();
         return;
       }
+      pageToLoad++;
       data.forEach(function(data) {
-        generateDom(data)
+        addDesignToList(data)
       });
       more.removeClass('hide');
     })
   }
 
-  function generateDom(data) {
-    var design = $(template.html());
+
+  function addDesignToList(data) {
+    var design = $(designTemplate.html());
     design.find('.title').text(data.title);
     design.find('.description').text(data.description);
     design.on('click', function() {
-      bridge.data.send({})
+      bridge.data.send({
+        segue: 'detail',
+        data: data
+      })
     });
-    design.appendTo(wrapper);
-    fastclick(design[0])
+    design.appendTo(designList);
+    fastclick(design[0]);
     design.find('.thumb img')[0].onload = function() {
       this.style.opacity = 1;
+      design.find('.loading').addClass('hide');
       setTimeout(function() {
         design.find('.likes').css('opacity', 1);
       }, 1300);
     }
-    design.find('.thumb img').attr('src', data.pics[0]);
-
+    design.find('.thumb img').attr('src', data.thumb)
+    return design;
   }
+
+
 }

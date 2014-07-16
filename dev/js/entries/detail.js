@@ -1,41 +1,51 @@
 var seaport = require('seaport-bridge');
 $ = require('zepto')
 var fastclick = require('fastclick');
-var Spinner = require('spin.js');
-var IScroll = require('iscroll');
 
-fastclick(document.body);
-//new IScroll(document.body);
+//fastclick(document.body);
 
-
-var spinner = new Spinner({
-  color: '#111111',
-  lines: 10,
-  length: 10
-});
-
-
-// spinner.spin(document.body);
-
-// $('.spinner').css({
-//   position:'fixed'
-// });
-
-// setTimeout(function() {
-//   spinner.stop()
-// }, 2000);
 
 seaport.connect(function dataHandler(data) {
-
   console.log('receive data:' + data);
+}, init);
 
-}, function(bridge) {
+function init(bridge) {
+  bridge.param.get('data', drawScreen);
+}
 
-	$('.product').on('click',function(){
-		bridge.data.send({})
-	})
+function drawScreen(design) {
+  var detail = $('.detail');
+  var commentTemplate = $('.comment-template');
+  var commentList = $('.comments');
+
+  design.detail.forEach(function(data) {
+    var img = new Image();
+    img.src = data.pic;
+    $(img).appendTo(detail);
+    img.onload = function() {
+      this.style.opacity = 1;
+    }
+    if (data.txt) {
+      $('<p></p>').text(data.txt).appendTo(detail)
+    }
+  });
+
+  $('.loading').addClass('hide');
+  $('.title').text(design.title);
+  $('.description').text(design.description);
+
+  design.comments.forEach(function(data) {
+    var comment = $(commentTemplate.html());
+    comment.find('.name').text(data.name);
+    comment.find('img').attr('src', data.avatar);
+    comment.find('.comment').text(data.content);
+    comment.appendTo(commentList)
+  });
 
 
+  $('textarea').on('keydown', function(event) {
+    if (event.which != 13) return;
+    alert($(this).val());
+  });
 
-
-})
+}

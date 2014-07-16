@@ -8,25 +8,62 @@ body
 .wrapper
   width:100%
   center()
+  position:relative
+  z-index:30
 
-.product
+.category-list-wrapper
+  width:100%
+  overflow-x:scroll
+  .category-list
+    margin-top:-40px
+    transition:margin-top .2s
+    height:40px
+    width:2000px
+    line-height:38px
+    background-color:#ffffff
+    border-top:1px solid #dedede
+    border-bottom:1px solid #dedede
+    .category
+      transition:.4s
+      padding: 0px 13px
+      float:left
+      font-size:14px
+      border-right:1px solid #dedede
+    .active
+      background-color:#555555
+      color:#ffffff
+
+
+.design
   margin:9px 9px
   background-color:#ffffff
   border:1px solid #dedede
   position:relative
   .thumb
+    position:relative
     width:100%
     min-height:120px
     background-color:#fafafa
+    .loading
+      position:absolute
+      width:100%
+      top:46%
+      text-align:center
+      color:#666666
+      z-index:5
+      font-size:12px
     img
+      position:relative
+      z-index:10
       display:inline-block
       opacity:0
       width:100%
       transition:opacity 1.3s
   .likes
     position:absolute
+    z-index:50
     color:#ffffff
-    background-color:rgba(0,0,0,.3)
+    background-color:rgba(0,0,0,.4s)
     font-size:12px
     font-weight:500
     padding:6px 8px 7px 8px
@@ -78,3 +115,12 @@ body
   color:#666666
   &:hover
     background-color:#fafafa
+
+.error
+  position:fixed
+  z-index:10
+  top:48%
+  text-align:center
+  font-size:18px
+  width:100%
+    

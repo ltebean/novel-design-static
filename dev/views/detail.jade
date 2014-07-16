@@ -17,21 +17,20 @@ mixin comment()
 
 block content
   .wrapper
-    .thumb
-      img(onload="this.style.opacity=1" src="http://p4.zbjimg.com/task/2011-08/17/968741/4e4b1606b89d3.jpg")
+    .detail
+      .loading Loading...
     .panel.top-area
       .title 卫生间设计
       .btn Like
-    .panel.description 提供各国家地区关税、必买清单.提供各国家地区关税、必买清单,提供各国家地区关税、必买清单提供各国家地区关税、必买清单.提供各国家地区关税、必买清单,提供各国家地区关
+    .panel.description 提供各国家地区关
     .panel.comments
-      +comment()
-      +comment()
-      +comment()
-      +comment()
-      +comment()
-      .more Load more
+      .comment-template.hide
+        +comment()
+    .comment-btn 评论
+  .dialog.hide
+    textarea(placeholder="评论..." autofocus)
+    .confirm-btn 发送
 
-      
   script.
     facade({
       entry:"novel-design-static/entries/detail.js"

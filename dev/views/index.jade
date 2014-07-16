@@ -6,13 +6,14 @@ block head
   title index
   +css("./css/index.css")
 
-mixin product()
-  .product
+mixin design()
+  .design
     .likes
       img(src="./img/icon-heart.png")
       span.txt 12
     .thumb
       img(onload="this.style.opacity=1")
+      .loading Loading...
     .content
       .angle
       //- .title The House Design
@@ -20,12 +21,21 @@ mixin product()
       .title Home Garden厨房设计
       .description 非常精美别致的厨房设计，有设计大师Kindlie设计
 
+mixin category(txt)
+  .category #{txt}
+
 block content
   .wrapper
+    .category-list-wrapper
+        .category-list
+          .category-template.hide
+            +category('最新')
     .design-list
       .design-template.hide
-        +product()
-    .more.hide Load more
+        +design()
+    .more.hide 加载更多
+  .error.hide
+    .txt Network Error
   script.
     facade({
       entry:"novel-design-static/entries/index.js"
