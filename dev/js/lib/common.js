@@ -25,3 +25,7 @@ exports.spinner= new Spinner({
   length: 9,
   width: 2
 });
+
+window.onerror=function(err,file,line){
+  alert(line+':'+err)
+}

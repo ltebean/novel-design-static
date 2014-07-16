@@ -81,7 +81,10 @@ function init(bridge) {
           favList.push(id);
           bridge.userDefaults.set('favs', favList);
         }
-      })
+      });
+
+      addFavCount(design);
+
     }
 
     function removeFav(design) {
@@ -94,6 +97,15 @@ function init(bridge) {
           bridge.userDefaults.set('favs', favList);
         }
       });
+    }
+
+    function addFavCount(design) {
+      bridge.http.post({
+        domain: common.domain,
+        path: '/api/design/' + design['_id'] + '/fav',
+        body:{}
+      }, function(data) {
+      })
     }
 
     fastclick(document.body);

@@ -76,7 +76,7 @@ function init(bridge) {
     var design = $(designTemplate.html());
     design.find('.title').text(data.title);
     design.find('.description').text(data.description);
-    design.find('.likes .txt').text(design.favs||0);
+    design.find('.likes .txt').text(data.favs||0);
     design.on('click', function() {
       bridge.data.send({
         segue: 'detail',
@@ -98,7 +98,7 @@ function init(bridge) {
 
   $('.more').on('click', function() {
     loadData();
-  })
+  });
 
 
 }
