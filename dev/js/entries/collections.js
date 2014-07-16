@@ -1,7 +1,6 @@
 var seaport = require('seaport-bridge');
-var $ = require('zepto');
+var $ = require('zepto')
 var fastclick = require('fastclick');
-var IScroll = require('iscroll');
 var common = require('../lib/common');
 var spinner = common.spinner;
 
@@ -16,7 +15,8 @@ function hideSpinner() {
   spinner.stop()
 }
 
-function showError() {
+function showError(msg) {
+  $('.error .txt').text(msg)
   $('.error').removeClass('hide');
 }
 
@@ -28,84 +28,35 @@ seaport.connect(function dataHandler(data) {
   console.log('receive data:' + data);
 }, init);
 
-
 function init(bridge) {
-  var screenWidth = $(document).width();
   var loading = false;
   var designList = $('.design-list');
   var designTemplate = $('.design-template');
-  var categoryList = $('.category-list');
-  var categoryTemplate = $('.category-template');
-  var more = $('.more');
   var pageToLoad = 1;
-  var categoryToLoad = '';
+  var pageSize = 2;
+  var ids = [];
 
-  more.on('click', function() {
-    loadData();
-  })
-
-  loadCategory();
-
-  function loadCategory() {
-
-    showSpinner()
-    bridge.http.get({
-      domain: common.domain,
-      path: '/api/category'
-    }, function(data) {
-      if (!data) {
-        hideSpinner();
-        showError();
-        return;
-      }
-      var totalWidth = 0;
-      data.forEach(function(data) {
-        totalWidth += addCategoryToList(data).width() + 1;
-      });
-      if (totalWidth > screenWidth) {
-        categoryList.css('width', totalWidth + 'px');
-      }
-      categoryList.css('margin-top', '0px');
-      setTimeout(function() {
-        loadData();
-      }, 300);
-    })
-  }
-
-  function addCategoryToList(data) {
-    var category = $(categoryTemplate.html());
-    category.text(data);
-    category.appendTo(categoryList);
-    fastclick(category[0]);
-    category.on('click', function() {
-      $('.category').removeClass('active');
-      $(this).addClass('active');
-      categoryToLoad = $(this).text().trim();
-      if (categoryToLoad == '最新') {
-        categoryToLoad = '';
-      }
-      loadData()
-    });
-    return category;
-  }
+  bridge.userDefaults.get('favs', function(data) {
+    ids = data || [];
+    if (ids.length == 0) {
+      showError('还没有任何收藏哦')
+    }
+    loadData(ids);
+  });
 
   function loadData() {
-    if (loading) {
-      return;
-    }
-    hideError();
+    var start = (pageToLoad - 1) * pageSize;
+    var end = start + pageSize;
+    var idsToLoad = ids.slice(start, end);
     showSpinner();
-    loading = true;
     bridge.http.get({
       domain: common.domain,
-      path: '/api/design',
+      path: '/api/design/list',
       params: {
-        page: pageToLoad,
-        category: categoryToLoad
+        ids: JSON.stringify(idsToLoad)
       }
     }, function(data) {
       hideSpinner();
-      loading = false;
       if (!data) {
         common.alert('Network Error');
         showError();
@@ -115,10 +66,11 @@ function init(bridge) {
       data.forEach(function(data) {
         addDesignToList(data)
       });
-      more.removeClass('hide');
+      if (ids.length > pageSize) {
+        $('.more').removeClass('hide');
+      }
     })
   }
-
 
   function addDesignToList(data) {
     var design = $(designTemplate.html());
@@ -142,6 +94,10 @@ function init(bridge) {
     design.find('.thumb img').attr('src', data.thumb)
     return design;
   }
+
+  $('.more').on('click', function() {
+    loadData();
+  })
 
 
 }

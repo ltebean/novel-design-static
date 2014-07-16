@@ -1,3 +1,5 @@
+var Spinner = require('spin.js');
+
 exports.domain = 'localhost:3000';
 
 exports.alert = function alert(words) {
@@ -16,3 +18,10 @@ exports.prompt = function prompt(title) {
   iframe.parentNode.removeChild(iframe);
   return val;
 }
+
+exports.spinner= new Spinner({
+  color: '#111111',
+  lines: 12,
+  length: 9,
+  width: 2
+});
