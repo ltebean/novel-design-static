@@ -1,16 +1,7 @@
 var seaport = require('seaport-bridge');
-$ = require('zepto')
+var $ = require('zepto')
 var fastclick = require('fastclick');
-
-
-function prompt(title) {
-  var iframe = document.createElement("IFRAME");
-  iframe.setAttribute("src", 'data:text/plain,');
-  document.documentElement.appendChild(iframe);
-  var val=window.frames[0].window.prompt(title);
-  iframe.parentNode.removeChild(iframe);
-  return val;
-}
+var common = require('../lib/common');
 
 seaport.connect(function dataHandler(data) {
   console.log('receive data:' + data);
@@ -26,7 +17,7 @@ function drawScreen(design) {
   var commentList = $('.comments');
   var commentDialog = $('.dialog');
   var commentInput = commentDialog.find('textarea');
-  var likeBtn=$('.like-btn');
+  var likeBtn = $('.like-btn');
 
   design.detail.forEach(function(data) {
     var img = new Image();
@@ -53,7 +44,7 @@ function drawScreen(design) {
     comment.appendTo(commentList);
   });
 
-  likeBtn.on('click',function(){
+  likeBtn.on('click', function() {
     likeBtn.find('img').addClass('like-animation');
     setTimeout(function() {
       likeBtn.find('span').text('Liked');
@@ -62,8 +53,8 @@ function drawScreen(design) {
   })
 
   $('.comment-btn').on('click', function() {
-      var content=prompt('输入评论');
-      //alert(val)
+    var content = common.prompt('输入评论');
+    //alert(val)
   });
 
   fastclick(document.body);

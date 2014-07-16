@@ -1,10 +1,10 @@
 var seaport = require('seaport-bridge');
-$ = require('zepto')
+var $ = require('zepto');
 var fastclick = require('fastclick');
 var Spinner = require('spin.js');
 var IScroll = require('iscroll');
+var common = require('../lib/common');
 
-var domain = 'localhost:3000';
 
 var spinner = new Spinner({
   color: '#111111',
@@ -22,14 +22,6 @@ function showSpinner() {
 
 function hideSpinner() {
   spinner.stop()
-}
-
-function alert(words) {
-  var iframe = document.createElement("IFRAME");
-  iframe.setAttribute("src", 'data:text/plain,');
-  document.documentElement.appendChild(iframe);
-  window.frames[0].window.alert(words);
-  iframe.parentNode.removeChild(iframe);
 }
 
 function showError() {
@@ -66,7 +58,7 @@ function init(bridge) {
 
     showSpinner()
     bridge.http.get({
-      domain: domain,
+      domain: common.domain,
       path: '/api/category'
     }, function(data) {
       if (!data) {
@@ -113,7 +105,7 @@ function init(bridge) {
     showSpinner();
     loading = true;
     bridge.http.get({
-      domain: domain,
+      domain: common.domain,
       path: '/api/design',
       params: {
         page: pageToLoad,
@@ -123,7 +115,7 @@ function init(bridge) {
       hideSpinner();
       loading = false;
       if (!data) {
-        alert('Network Error');
+        common.alert('Network Error');
         showError();
         return;
       }
