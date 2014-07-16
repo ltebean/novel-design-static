@@ -4,6 +4,8 @@ var fastclick = require('fastclick');
 var Spinner = require('spin.js');
 var IScroll = require('iscroll');
 
+var domain = 'localhost:3000';
+
 var spinner = new Spinner({
   color: '#111111',
   lines: 12,
@@ -60,13 +62,11 @@ function init(bridge) {
 
   loadCategory();
 
-  var domain = 'noveldesign.apiary-mock.com';
-
-
   function loadCategory() {
+
     showSpinner()
     bridge.http.get({
-      domain: 'localhost:3000',
+      domain: domain,
       path: '/api/category'
     }, function(data) {
       if (!data) {
@@ -113,7 +113,7 @@ function init(bridge) {
     showSpinner();
     loading = true;
     bridge.http.get({
-      domain: 'localhost:3000',
+      domain: domain,
       path: '/api/design',
       params: {
         page: pageToLoad,
