@@ -21,15 +21,14 @@ block content
       .loading Loading...
     .panel.top-area
       .title 卫生间设计
-      .btn Like
+      .like-btn
+        img(src="./img/icon-heart.png")
+        span Like
     .panel.description 提供各国家地区关
     .panel.comments
       .comment-template.hide
         +comment()
     .comment-btn 评论
-  .dialog.hide
-    textarea(placeholder="评论..." autofocus)
-    .confirm-btn 发送
 
   script.
     facade({
