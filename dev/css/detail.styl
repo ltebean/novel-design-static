@@ -13,6 +13,7 @@ body
   min-height:120px
   position:relative
   img
+    -webkit-user-select:auto
     width:100%
     opacity:0
     transition: opacity 1.3s
@@ -24,7 +25,7 @@ body
     color:#666666
     font-size:12px
   p
-    padding:10px
+    padding:12px 10px
     font-size:14px
   
 
@@ -78,10 +79,10 @@ body
 .comments
   background-color:#efefef
   border-bottom:none
-  padding:10px
+  padding:16px 10px 0px 10px
   .user-comment
     clearfix()
-    margin-bottom:10px
+    margin-bottom:18px
     .aside
       float:left
       width:50px
@@ -90,14 +91,9 @@ body
         opacity:0
         transition: opacity 1.6s
     .content
-      .top
-        .name
-          font-size:13px
-          color:#666666
       .comment
         background-color:#ffffff
         margin-left:50px
-        margin-top:7px
         padding:10px
         font-size:13px
         line-height:1.4

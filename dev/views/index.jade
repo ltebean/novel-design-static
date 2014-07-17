@@ -10,32 +10,29 @@ mixin design()
   .design
     .likes
       img(src="./img/icon-heart.png")
-      span.txt 12
+      span.txt 0
     .thumb
-      img(onload="this.style.opacity=1")
-      .loading Loading...
+      img
+      .loading 加载中...
     .content
       .angle
-      //- .title The House Design
-      //- .description It is designed by the famous person
-      .title Home Garden厨房设计
-      .description 非常精美别致的厨房设计，有设计大师Kindlie设计
+      .title Home
+      .description 非常
 
 mixin category(txt)
   .category #{txt}
 
 block content
   .wrapper
-    .category-list-wrapper
-        .category-list
-          .category-template.hide
-            +category('最新')
+    .category-list
+      .category-template.hide
+        +category('最新')
     .design-list
       .design-template.hide
         +design()
     .more.hide 加载更多
   .error.hide
-    .txt Network Error
+    .txt 网络连接错误
   script.
     facade({
       entry:"novel-design-static/entries/index.js"

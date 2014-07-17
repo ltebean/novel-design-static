@@ -1,6 +1,6 @@
 var Spinner = require('spin.js');
 
-exports.domain = 'localhost:3000';
+exports.domain = 'localhost:8090';
 
 exports.alert = function alert(words) {
   var iframe = document.createElement("IFRAME");

@@ -24,8 +24,20 @@ function hideError() {
   $('.error').addClass('hide');
 }
 
+function showCategory(){
+  $('.category-list').addClass('spread');
+}
+
+function hideCategory(){
+  $('.category-list').removeClass('spread');
+}
+
+function toggleCategory(){
+  $('.category-list').toggleClass('spread');
+}
+
 seaport.connect(function dataHandler(data) {
-  console.log('receive data:' + data);
+  toggleCategory();
 }, init);
 
 
@@ -45,6 +57,7 @@ function init(bridge) {
   })
 
   loadCategory();
+  loadData();
 
   function loadCategory() {
 
@@ -62,13 +75,6 @@ function init(bridge) {
       data.forEach(function(data) {
         totalWidth += addCategoryToList(data).width() + 1;
       });
-      if (totalWidth > screenWidth) {
-        categoryList.css('width', totalWidth + 'px');
-      }
-      categoryList.css('margin-top', '0px');
-      setTimeout(function() {
-        loadData();
-      }, 300);
     })
   }
 
@@ -84,7 +90,9 @@ function init(bridge) {
       if (categoryToLoad == '最新') {
         categoryToLoad = '';
       }
-      loadData()
+      pageToLoad=1;
+      loadData();
+      hideCategory();
     });
     return category;
   }
@@ -107,9 +115,16 @@ function init(bridge) {
       hideSpinner();
       loading = false;
       if (!data) {
-        common.alert('Network Error');
+        common.alert('网络连接错误');
         showError();
         return;
+      }
+      if(data.length==0){
+        common.alert('没有更多咯');
+        return;
+      }
+      if(pageToLoad==1){
+        designList.empty();
       }
       pageToLoad++;
       data.forEach(function(data) {
@@ -126,6 +141,7 @@ function init(bridge) {
     design.find('.description').text(data.description);
     design.find('.likes .txt').text(data.favs||0);
     design.on('click', function() {
+      hideCategory();
       bridge.data.send({
         segue: 'detail',
         data: data

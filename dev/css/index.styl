@@ -11,28 +11,33 @@ body
   position:relative
   z-index:30
 
-.category-list-wrapper
-  width:100%
-  overflow-x:scroll
-  .category-list
-    margin-top:-40px
-    transition:margin-top .2s
-    height:40px
-    width:2000px
-    line-height:38px
-    background-color:#ffffff
-    border-top:1px solid #dedede
-    border-bottom:1px solid #dedede
-    .category
-      transition:.4s
-      padding: 0px 13px
-      float:left
-      font-size:14px
-      border-right:1px solid #dedede
-    .active
-      background-color:#555555
-      color:#ffffff
 
+.category-list
+  position:fixed
+  z-index:200
+  max-height:0px
+  width:100%
+  top:0px
+  left:0px
+  line-height:38px
+  background-color:#ffffff
+  overflow:scroll
+  transition: max-height 0.3s
+  .category
+    height:40px
+    padding: 0px 20px
+    font-size:14px
+    border-bottom:1px solid #dedede
+    &:last-child
+      border-bottom:none
+  .active
+    background-color:#555555
+    color:#ffffff
+
+.spread
+  max-height:240px
+  border-top:1px solid #dedede
+  border-bottom:1px solid #dedede
 
 .design
   margin:9px 9px
@@ -121,6 +126,7 @@ body
   z-index:10
   top:48%
   text-align:center
-  font-size:18px
+  font-size:16px
+  color:#666666
   width:100%
     

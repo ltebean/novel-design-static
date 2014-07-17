@@ -58,7 +58,7 @@ function init(bridge) {
     }, function(data) {
       hideSpinner();
       if (!data) {
-        common.alert('Network Error');
+        common.alert('网络连接错误');
         showError();
         return;
       }

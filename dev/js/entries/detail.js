@@ -40,12 +40,16 @@ function init(bridge) {
     $('.description').text(design.description);
 
     design.comments && design.comments.forEach(function(data) {
+      appendComment(data);
+    });
+
+    function appendComment(data){
       var comment = $(commentTemplate.html());
       comment.find('.name').text(data.name);
       comment.find('img').attr('src', data.avatar);
       comment.find('.comment').text(data.content);
       comment.appendTo(commentList);
-    });
+    }
 
     likeBtn.on('click', function() {
       if (likeBtn.find('span').text() == 'Liked') {
@@ -64,7 +68,21 @@ function init(bridge) {
 
     $('.comment-btn').on('click', function() {
       var content = common.prompt('输入评论');
-      //alert(val)
+      if(!content){
+        return;
+      }
+       bridge.http.post({
+        domain: common.domain,
+        path: '/api/design/' + design['_id'] + '/comment',
+        body:{
+          content:content
+        }
+      }, function(data) {
+        if(!data){
+          return;
+        }
+        appendComment(data);
+      })
     });
 
     function addToFav(design) {

@@ -13,7 +13,7 @@ mixin design()
       span.txt 12
     .thumb
       img(onload="this.style.opacity=1")
-      .loading Loading...
+      .loading 加载中...
     .content
       .angle
       .title Home Garden厨房设计
@@ -33,7 +33,7 @@ block content
         +design()
     .more.hide 加载更多
   .error.hide
-    .txt Network Error
+    .txt 网络连接错误
   script.
     facade({
       entry:"novel-design-static/entries/collections.js"
