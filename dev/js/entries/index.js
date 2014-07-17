@@ -4,7 +4,6 @@ var fastclick = require('fastclick');
 var IScroll = require('iscroll');
 var common = require('../lib/common');
 var spinner = common.spinner;
-
 function showSpinner() {
   spinner.spin(document.body);
   $('.spinner').css({
