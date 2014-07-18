@@ -25,7 +25,7 @@ function hideError() {
 }
 
 seaport.connect(function dataHandler(data) {
-  console.log('receive data:' + data);
+
 }, init);
 
 function init(bridge) {
@@ -33,7 +33,7 @@ function init(bridge) {
   var designList = $('.design-list');
   var designTemplate = $('.design-template');
   var pageToLoad = 1;
-  var pageSize = 2;
+  var pageSize = 8;
   var ids = [];
 
   bridge.userDefaults.get('favs', function(data) {

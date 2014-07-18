@@ -11,18 +11,18 @@ mixin comment()
     .aside
       img(onload="this.style.opacity=1" src="https://avatars0.githubusercontent.com/u/1646564?s=460")
     .content
-      .comment 非常棒的设计
+      .comment
 
 block content
   .wrapper
     .detail
       .loading 加载中...
     .panel.top-area
-      .title 卫生间设计
+      .title
       .like-btn
         img(src="./img/icon-heart.png")
         span Like
-    .panel.description 提供各国家地区关
+    .panel.description.hide
     .panel.comments
       .comment-template.hide
         +comment()

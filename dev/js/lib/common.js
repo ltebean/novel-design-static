@@ -1,6 +1,6 @@
 var Spinner = require('spin.js');
 
-exports.domain = 'localhost:8090';
+exports.domain = '223.4.15.141:8090';
 
 exports.alert = function alert(words) {
   var iframe = document.createElement("IFRAME");
@@ -26,6 +26,6 @@ exports.spinner= new Spinner({
   width: 2
 });
 
-window.onerror=function(err,file,line){
-  alert(line+':'+err)
-}
+// window.onerror=function(err,file,line){
+//   alert(line+':'+err)
+// }

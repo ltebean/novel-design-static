@@ -1,7 +1,6 @@
 var seaport = require('seaport-bridge');
 var $ = require('zepto');
 var fastclick = require('fastclick');
-var IScroll = require('iscroll');
 var common = require('../lib/common');
 var spinner = common.spinner;
 function showSpinner() {
@@ -70,9 +69,9 @@ function init(bridge) {
         showError();
         return;
       }
-      var totalWidth = 0;
+      addCategoryToList('最新');
       data.forEach(function(data) {
-        totalWidth += addCategoryToList(data).width() + 1;
+        addCategoryToList(data);
       });
     })
   }
@@ -86,14 +85,17 @@ function init(bridge) {
       $('.category').removeClass('active');
       $(this).addClass('active');
       categoryToLoad = $(this).text().trim();
+      bridge.data.send({
+        title:$(this).text().trim()
+      });
       if (categoryToLoad == '最新') {
         categoryToLoad = '';
       }
       pageToLoad=1;
       loadData();
       hideCategory();
+
     });
-    return category;
   }
 
   function loadData() {
@@ -130,6 +132,7 @@ function init(bridge) {
         addDesignToList(data)
       });
       more.removeClass('hide');
+      $(window).scrollTop(0);
     })
   }
 

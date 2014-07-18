@@ -3,12 +3,8 @@ var $ = require('zepto')
 var fastclick = require('fastclick');
 var common = require('../lib/common');
 
-window.onerror = function(msg, url, line) {
-  alert(line + ':' + msg)
-}
-
 seaport.connect(function dataHandler(data) {
-  console.log('receive data:' + data);
+
 }, init);
 
 function init(bridge) {
@@ -22,6 +18,10 @@ function init(bridge) {
     var commentInput = commentDialog.find('textarea');
     var likeBtn = $('.like-btn');
 
+    $('.loading').addClass('hide');
+    $('.title').text(design.title);
+    $('.description').text(design.description).removeClass('hide');
+
     design.detail.forEach(function(data) {
       var img = new Image();
       img.src = data.pic;
@@ -34,16 +34,11 @@ function init(bridge) {
       }
     });
 
-
-    $('.loading').addClass('hide');
-    $('.title').text(design.title);
-    $('.description').text(design.description);
-
     design.comments && design.comments.forEach(function(data) {
       appendComment(data);
     });
 
-    function appendComment(data){
+    function appendComment(data) {
       var comment = $(commentTemplate.html());
       comment.find('.name').text(data.name);
       comment.find('img').attr('src', data.avatar);
@@ -68,17 +63,17 @@ function init(bridge) {
 
     $('.comment-btn').on('click', function() {
       var content = common.prompt('输入评论');
-      if(!content){
+      if (!content) {
         return;
       }
-       bridge.http.post({
+      bridge.http.post({
         domain: common.domain,
         path: '/api/design/' + design['_id'] + '/comment',
-        body:{
-          content:content
+        body: {
+          content: content
         }
       }, function(data) {
-        if(!data){
+        if (!data) {
           return;
         }
         appendComment(data);
@@ -121,9 +116,8 @@ function init(bridge) {
       bridge.http.post({
         domain: common.domain,
         path: '/api/design/' + design['_id'] + '/fav',
-        body:{}
-      }, function(data) {
-      })
+        body: {}
+      }, function(data) {})
     }
 
     fastclick(document.body);
