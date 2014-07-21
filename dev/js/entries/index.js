@@ -126,13 +126,13 @@ function init(bridge) {
       }
       if(pageToLoad==1){
         designList.empty();
+        $(window).scrollTop(0);
       }
-      pageToLoad++;
       data.forEach(function(data) {
-        addDesignToList(data)
+        addDesignToList(data);
       });
       more.removeClass('hide');
-      $(window).scrollTop(0);
+      pageToLoad++;
     })
   }
 
