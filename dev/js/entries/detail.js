@@ -14,14 +14,17 @@ function init(bridge) {
     var detail = $('.detail');
     var commentTemplate = $('.comment-template');
     var commentList = $('.comments');
+    var commentBtn = $('.comment-btn');
     var commentDialog = $('.dialog');
     var commentInput = commentDialog.find('textarea');
     var likeBtn = $('.like-btn');
+    var buyBtn = $('.buy-btn');
 
     $('.loading').addClass('hide');
     $('.title').text(design.title);
     $('.description').text(design.description).removeClass('hide');
 
+    
     design.detail.forEach(function(data) {
       var img = new Image();
       img.src = data.pic;
@@ -46,6 +49,12 @@ function init(bridge) {
       comment.appendTo(commentList);
     }
 
+    if(design.buyLink){
+      buyBtn.removeClass('hide').on('click',function(){
+        bridge.url.open(design.buyLink);
+      });
+    }
+
     likeBtn.on('click', function() {
       if (likeBtn.find('span').text() == 'Liked') {
         removeFav(design);
@@ -61,7 +70,7 @@ function init(bridge) {
       }
     });
 
-    $('.comment-btn').on('click', function() {
+    commentBtn.on('click', function() {
       var content = common.prompt('输入评论');
       if (!content) {
         return;
