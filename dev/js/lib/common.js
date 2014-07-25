@@ -26,6 +26,6 @@ exports.spinner= new Spinner({
   width: 2
 });
 
-window.onerror=function(err,file,line){
-  alert(line+':'+err)
-}
+// window.onerror=function(err,file,line){
+//   alert(line+':'+err)
+// }
