@@ -3,6 +3,7 @@ var $ = require('zepto');
 var fastclick = require('fastclick');
 var common = require('../lib/common');
 var spinner = common.spinner;
+
 function showSpinner() {
   spinner.spin(document.body);
   $('.spinner').css({
@@ -22,15 +23,15 @@ function hideError() {
   $('.error').addClass('hide');
 }
 
-function showCategory(){
+function showCategory() {
   $('.category-list').addClass('spread');
 }
 
-function hideCategory(){
+function hideCategory() {
   $('.category-list').removeClass('spread');
 }
 
-function toggleCategory(){
+function toggleCategory() {
   $('.category-list').toggleClass('spread');
 }
 
@@ -49,6 +50,7 @@ function init(bridge) {
   var more = $('.more');
   var pageToLoad = 1;
   var categoryToLoad = '';
+  var orderToLoad = '';
 
   more.on('click', function() {
     loadData();
@@ -70,6 +72,7 @@ function init(bridge) {
         return;
       }
       addCategoryToList('最新');
+      addCategoryToList('最赞');
       data.forEach(function(data) {
         addCategoryToList(data);
       });
@@ -86,12 +89,16 @@ function init(bridge) {
       $(this).addClass('active');
       categoryToLoad = $(this).text().trim();
       bridge.data.send({
-        title:$(this).text().trim()
+        title: $(this).text().trim()
       });
+      orderToLoad = '';
       if (categoryToLoad == '最新') {
         categoryToLoad = '';
+      } else if (categoryToLoad == '最赞') {
+        categoryToLoad = '';
+        orderToLoad = 'favs';
       }
-      pageToLoad=1;
+      pageToLoad = 1;
       loadData();
       hideCategory();
 
@@ -110,7 +117,8 @@ function init(bridge) {
       path: '/api/design',
       params: {
         page: pageToLoad,
-        category: categoryToLoad
+        category: categoryToLoad,
+        order:orderToLoad
       }
     }, function(data) {
       hideSpinner();
@@ -120,11 +128,11 @@ function init(bridge) {
         showError();
         return;
       }
-      if(data.length==0){
+      if (data.length == 0) {
         common.alert('没有更多咯');
         return;
       }
-      if(pageToLoad==1){
+      if (pageToLoad == 1) {
         designList.empty();
         $(window).scrollTop(0);
       }
@@ -141,7 +149,7 @@ function init(bridge) {
     var design = $(designTemplate.html());
     design.find('.title').text(data.title);
     design.find('.description').text(data.description);
-    design.find('.likes .txt').text(data.favs||0);
+    design.find('.likes .txt').text(data.favs || 0);
     design.on('click', function() {
       hideCategory();
       bridge.data.send({
