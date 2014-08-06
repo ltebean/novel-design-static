@@ -99,8 +99,11 @@ function init(bridge) {
         orderToLoad = 'favs';
       }
       pageToLoad = 1;
-      loadData();
       hideCategory();
+      setTimeout(function() {
+        more.addClass('hide');
+        loadData();
+      }, 300);
 
     });
   }
