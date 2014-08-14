@@ -18,6 +18,7 @@ function init(bridge) {
     var commentDialog = $('.dialog');
     var commentInput = commentDialog.find('textarea');
     var likeBtn = $('.like-btn');
+    var buyArea= $('.buy-area');
     var buyBtn = $('.buy-btn');
 
     $('.loading').addClass('hide');
@@ -50,7 +51,8 @@ function init(bridge) {
     }
 
     if(design.buyLink){
-      buyBtn.removeClass('hide').on('click',function(){
+      buyArea.removeClass('hide');
+      buyBtn.on('click',function(){
         bridge.url.open(design.buyLink);
       });
     }
