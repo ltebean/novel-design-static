@@ -28,8 +28,11 @@ gulp.task('jade', function() {
 });
 
 gulp.task('cortex', function() {
-  return gulp.src(["./dev/js/neurons/**/*.js"])
+  gulp.src(["./dev/js/neurons/**/*.js"])
     .pipe(uglify())
+    .pipe(gulp.dest('./build/neurons/'));
+
+  gulp.src(["./dev/js/neurons/**/*.css"])
     .pipe(gulp.dest('./build/neurons/'));
 });
 

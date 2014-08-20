@@ -121,7 +121,7 @@ function init(bridge) {
       params: {
         page: pageToLoad,
         category: categoryToLoad,
-        order:orderToLoad
+        order: orderToLoad
       }
     }, function(data) {
       hideSpinner();
@@ -139,8 +139,8 @@ function init(bridge) {
         designList.empty();
         $(window).scrollTop(0);
       }
-      data.forEach(function(data) {
-        addDesignToList(data);
+      $.each(data, function(index, data) {
+        addDesignToList(index, data);
       });
       more.removeClass('hide');
       pageToLoad++;
@@ -148,7 +148,7 @@ function init(bridge) {
   }
 
 
-  function addDesignToList(data) {
+  function addDesignToList(index, data) {
     var design = $(designTemplate.html());
     design.find('.title').text(data.title);
     design.find('.description').text(data.description);
@@ -169,7 +169,14 @@ function init(bridge) {
         design.find('.likes').css('opacity', 1);
       }, 1300);
     }
-    design.find('.thumb img').attr('src', data.thumb)
+    design.find('.thumb img').attr('src', data.thumb);
+    if (index < 2) {
+      var animation = 'animated flipInX';
+      design.addClass(animation);
+      setTimeout(function() {
+        design.removeClass(animation);
+      }, 3000);
+    }
     return design;
   }
 
